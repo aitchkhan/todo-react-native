@@ -4,31 +4,186 @@
  * @flow
  */
 import React, { Component } from 'react';
-import { AppRegistry, Text, Image, View } from 'react-native';
+import { 
+  AppRegistry, 
+  Text,
+  TextInput, 
+  Image, 
+  View, 
+  ListView,
+  TouchableHighlight,
+  StyleSheet 
+} from 'react-native';
+//import Firebase from 'firebase';
+import * as firebase from 'firebase';
 
-class Greetings extends Component {
-    render() {
-    return (
-    <Text>Hello! {this.props.name}</Text>
-    );
-    }
-}
+
+
 
 class HelloWorldApp extends Component {
+  constructor(props) {
+    super(props);
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCDyzDBmOOvHwxTayCgxGD60d7sPJowMFg',
+      authDomain: 'https://my-awesome-project-f248c.firebaseio.com/',
+      databaseURL: 'https://my-awesome-project-f248c.firebaseio.com/'
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    
+    this.todosRef = firebase.database().ref('todos/');
+
+    this.state  = {
+      todo: '',
+      todoSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 })
+    };
+
+    this.todos = [];
+    //const firebaseRef = new Firebase('https://my-awesome-project-f248c.firebaseio.com/');
+
+    /*firebase.database().ref('todos/').set({
+      title: 'Meet team lead',
+      author: 'Haroon'
+    });*/
+
+  }
+
+  //after the component has rendered
+  componentDidMount() {
+    //listener for adding a child
+    this.todosRef.on('child_added', (dataSnapShot) => {
+      this.todos.push({ id: dataSnapShot.key, text: dataSnapShot.val()});
+
+      this.setState({
+        todoSource: this.state.todoSource.cloneWithRows(this.todos)
+      })
+    })
+
+    //listener for removing a child
+    this.todosRef.on('child_removed', (dataSnapShot) => {
+      this.todos = this.todos.filter((x) => x.id !== dataSnapShot.key);
+
+      this.setState = {
+        todoSource: this.state.todoSource.cloneWithRows(this.todos)
+      };
+    });
+  }
+
+  addTodo() {
+    if(this.state.todo !== '') {
+      this.todosRef.push(this.state.todo);
+
+      this.setState({
+        todo: ''
+      });
+    }
+  }
+
+  removeTodo(rowData) {
+    this.todosRef.child(rowData.id).remove();
+  }
+
+  renderRow(rowData) {
+    return(
+      <TouchableHighlight underlayColor='#dddddd' onPress={() => this.removeTodo(rowData)}>
+        <View>
+          <View style={styles.row}>
+            <Text style={styles.todoText}> {rowData.text} </Text>
+
+          </View>
+          <View style={styles.separator} />
+        </View>
+      </TouchableHighlight>
+    )
+    
+  }
+
   render() {
-  let pic = {
-  uri: 'http://192.168.1.70/buybye-platform/uploads/image-1480059523382.png'
-  };
     return (
-      <View style={{alignItems:'center'}}>
-      <Image source={pic} style={{width:150, height: 150}}/>
-      <Greetings name="Haroon"/>
-      <Greetings name="Ayaz"/>
-      <Greetings name="Estes"/>
+      <View style={styles.appContainer}>
+        <View style={styles.titleView}>
+          <Text style={styles.titleText}> My Todos! </Text>
+        </View>
+
+        <View style={styles.inputcontainer}>
+          <TextInput style={styles.input} value={this.state.todo}
+            placeholder='New Todo' onChangeText={(text) => this.setState({ todo: text })} />
+          <TouchableHighlight style={styles.button} 
+          underlayColor='#dddddd' onPress={() => this.addTodo()}>
+          <Text style={styles.btnText}>Add</Text>
+          </TouchableHighlight>  
+        </View>
+
+        <ListView dataSource={this.state.todoSource} renderRow={this.renderRow.bind(this)} />
+      
       </View>
     );
   }
+
+
+  
 }
+
+const styles = StyleSheet.create({
+  appContainer:{
+    flex: 1
+  },
+  titleView:{
+    backgroundColor: '#48afdb',
+    paddingTop: 30,
+    paddingBottom: 10,
+    flexDirection: 'row'
+  },
+  titleText:{
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    flex: 1,
+    fontSize: 20,
+  },
+  inputcontainer: {
+    marginTop: 5,
+    padding: 10,
+    flexDirection: 'row'
+  },
+  button: {
+    height: 36,
+    flex: 2,
+    flexDirection: 'row',
+    backgroundColor: '#48afdb',
+    justifyContent: 'center',
+    // color: '#FFFFFF',
+    borderRadius: 4,
+  },
+  btnText: {
+    fontSize: 18,
+    //color: '#fff',
+    marginTop: 6,
+  },
+  input: {
+    height: 36,
+    padding: 4,
+    marginRight: 5,
+    flex: 4,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: '#48afdb',
+    borderRadius: 4,
+    color: '#48BBEC'
+  },
+  row: {
+    flexDirection: 'row',
+    padding: 12,
+    height: 44
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#CCCCCC',
+  },
+  todoText: {
+    flex: 1,
+  }
+});
 
 
 
