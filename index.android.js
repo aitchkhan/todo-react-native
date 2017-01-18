@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 import { 
   AppRegistry, 
   Text,
-  TextInput, 
+  TextInput,
+  Navigator, 
   Image, 
   View, 
   ListView,
@@ -16,6 +17,9 @@ import {
 } from 'react-native';
 //import Firebase from 'firebase';
 import * as firebase from 'firebase';
+import LoginView from './src/modules/login/LoginView';
+import SignupView from './src/modules/signup/SignUpView';
+import TodoListView from './src/modules/todo-list/TodoListView';
 
 
 
@@ -23,7 +27,19 @@ import * as firebase from 'firebase';
 class HelloWorldApp extends Component {
   constructor(props) {
     super(props);
-    const firebaseConfig = {
+    
+  }
+
+  //after the component has rendered
+  componentDidMount() {
+    
+    
+  }
+
+
+
+/*constructor code*/
+  /*const firebaseConfig = {
       apiKey: 'AIzaSyCDyzDBmOOvHwxTayCgxGD60d7sPJowMFg',
       authDomain: 'https://my-awesome-project-f248c.firebaseio.com/',
       databaseURL: 'https://my-awesome-project-f248c.firebaseio.com/'
@@ -38,34 +54,27 @@ class HelloWorldApp extends Component {
       todoSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 })
     };
 
-    this.todos = [];
-    //const firebaseRef = new Firebase('https://my-awesome-project-f248c.firebaseio.com/');
+    this.todos = [];   */
 
-    /*firebase.database().ref('todos/').set({
-      title: 'Meet team lead',
-      author: 'Haroon'
-    });*/
 
-  }
 
-  //after the component has rendered
-  componentDidMount() {
-    //listener for adding a child
+    /**  @componentDidMount
+     * //listener for adding a child
     this.todosRef.on('child_added', (dataSnapShot) => {
       this.todos.push({ id: dataSnapShot.key, text: dataSnapShot.val()});
 
       this.setState({
         todoSource: this.state.todoSource.cloneWithRows(this.todos)
-      })
-    })
+      });
+    });
 
     //listener for removing a child
     this.todosRef.on('child_removed', (dataSnapShot) => {
       this.todos = this.todos.filter((x) => x.id !== dataSnapShot.key);
 
-      this.setState = {
+      this.setState({
         todoSource: this.state.todoSource.cloneWithRows(this.todos)
-      };
+      });
     });
   }
 
@@ -83,7 +92,7 @@ class HelloWorldApp extends Component {
     this.todosRef.child(rowData.id).remove();
   }
 
-  renderRow(rowData) {
+  renderRow = (rowData) => {
     return(
       <TouchableHighlight underlayColor='#dddddd' onPress={() => this.removeTodo(rowData)}>
         <View>
@@ -95,34 +104,50 @@ class HelloWorldApp extends Component {
         </View>
       </TouchableHighlight>
     )
-    
-  }
+    */
 
   render() {
     return (
-      <View style={styles.appContainer}>
+      <Navigator initialRoute={{
+        id: 'signin'
+      }} renderScene={this.renderNavigatorScene} />
+    );
+  }
+
+
+  renderNavigatorScene(route, navigator) {
+    switch(route.id) {
+      case 'signin': 
+        return( <LoginView navigator={navigator}/> );
+      case 'signup':
+      return ( <SignupView navigator={navigator}/>);   
+
+      case 'todo-list':
+      return ( <TodoListView navigator={navigator}/>);
+    }
+  }
+}
+
+/*
+<View style={styles.appContainer}>
         <View style={styles.titleView}>
           <Text style={styles.titleText}> My Todos! </Text>
         </View>
 
         <View style={styles.inputcontainer}>
           <TextInput style={styles.input} value={this.state.todo}
-            placeholder='New Todo' onChangeText={(text) => this.setState({ todo: text })} />
+            placeholder='New Todo' onChangeText={todo => this.setState({todo})}  />
           <TouchableHighlight style={styles.button} 
           underlayColor='#dddddd' onPress={() => this.addTodo()}>
           <Text style={styles.btnText}>Add</Text>
           </TouchableHighlight>  
         </View>
 
-        <ListView dataSource={this.state.todoSource} renderRow={this.renderRow.bind(this)} />
+        <ListView dataSource={this.state.todoSource} renderRow={this.renderRow} />
       
       </View>
-    );
-  }
-
-
-  
-}
+      
+      */
 
 const styles = StyleSheet.create({
   appContainer:{
