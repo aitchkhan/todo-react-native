@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import * as _ from 'lodash';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCDyzDBmOOvHwxTayCgxGD60d7sPJowMFg',
@@ -24,3 +25,20 @@ export function signin(email, password) {
   
   return promise;
 }
+
+export function updateUserInfo(userInfo) {
+  let currentUser = firebase.auth.currentUser;
+  if (_.has(userInfo, 'displayName') || _.has(userInfo, 'photoURL')) {
+    if (currentUser) {
+      return currentUser.updateUserInfo(userInfo)
+      .then(() => {
+        Toast.show('User info updated successfully')
+      })
+      .catch(error => {
+        console.log(error);
+        Toast.show(error);
+      });
+    }
+  }
+  
+} 

@@ -20,6 +20,7 @@ import * as firebase from 'firebase';
 import LoginView from './src/modules/login/LoginView';
 import SignupView from './src/modules/signup/SignUpView';
 import TodoListView from './src/modules/todo-list/TodoListView';
+import NewTodo from './src/modules/new-todo/NewTodo';
 
 
 
@@ -106,10 +107,11 @@ class HelloWorldApp extends Component {
     )
     */
 
+    
   render() {
     return (
       <Navigator initialRoute={{
-        id: 'signin'
+        id: 'new-todo'
       }} renderScene={this.renderNavigatorScene} />
     );
   }
@@ -124,7 +126,12 @@ class HelloWorldApp extends Component {
 
       case 'todo-list':
       return ( <TodoListView navigator={navigator}/>);
+
+      case 'new-todo':
+      return ( <NewTodo navigator={navigator} title='New Todo'/>);
     }
+
+
   }
 }
 

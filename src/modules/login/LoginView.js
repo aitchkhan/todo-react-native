@@ -71,28 +71,30 @@ export default class LoginView extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <View style={}>
-        <Image source={require('../../../images/')}/>
-      </View>
-        <View style={styles.userInput}>
-          <TextInput placeholder='Email' keyboardType='email-address' returnKeyType="next"
-            autoCapitalize={'none'} autoCorrect={false} onChangeText={(email) => this.setState({ email })}
-            value={this.state.email} />
-          <TextInput placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({ password })}
-            value={this.state.password} />
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={require('../../../images/logo-icon.png')} />
         </View>
+        <View style={styles.loginForm}>
+          <View style={styles.userInput}>
+            <TextInput placeholder='Email' keyboardType='email-address' returnKeyType="next"
+              autoCapitalize={'none'} autoCorrect={false} onChangeText={(email) => this.setState({ email })}
+              value={this.state.email} />
+            <TextInput placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({ password })}
+              value={this.state.password} />
+          </View>
 
           <View style={styles.loginBtn}>
-            <Button title="Login" color="#841584"
+            <Button title="Log in" color="#4ad5c2"
               onPress={() => this.onSubmit()} />
           </View>
           <View style={styles.signupBtn}>
-            <TouchableOpacity onPress={ () => this.onPressSignup() }>
+            <TouchableOpacity onPress={() => this.onPressSignup()}>
               <Text>Sign up</Text>
             </TouchableOpacity>
           </View>
+        </View>
 
-        
+
       </View>
     );
   }
@@ -103,7 +105,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#545162'
+  },
+  logoContainer: {
+    flex:1,
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  logo: {
+    height: 100,
+    width: 100
+  },
+  loginForm: {
+    flex: 1.5
   },
   userInput: {
     marginTop: 10,
@@ -114,7 +129,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 30,
     marginRight: 30
-
   },
   signupBtn: {
     marginTop: 20,
