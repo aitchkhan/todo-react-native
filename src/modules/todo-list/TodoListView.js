@@ -32,7 +32,7 @@ export default class TodoListView extends Component {
       <View style={styles.container}>
       <View style={styles.toolbar}></View>
       <TouchableOpacity onPress={() => this._navigate('new-todo')}>
-      <Icon name='md-add' color='black' size={30} style={styles.icons}/>
+      <Icon name='md-add' color='black' size={30} style={styles.addBtn}/>
       </TouchableOpacity>
     
         <View style={styles.containerToolbar}>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center' 
   },
-  icons: {
+  addBtn: {
     marginRight: 15 ,
     justifyContent: 'space-around',
     alignSelf: 'flex-end'

@@ -20,7 +20,7 @@ import * as firebase from 'firebase';
 import LoginView from './src/modules/login/LoginView';
 import SignupView from './src/modules/signup/SignUpView';
 import TodoListView from './src/modules/todo-list/TodoListView';
-import NewTodo from './src/modules/new-todo/NewTodo';
+import NewTodoView from './src/modules/new-todo/NewTodoView';
 
 
 
@@ -28,18 +28,18 @@ import NewTodo from './src/modules/new-todo/NewTodo';
 class HelloWorldApp extends Component {
   constructor(props) {
     super(props);
-    
+
   }
 
   //after the component has rendered
   componentDidMount() {
-    
-    
+
+
   }
 
 
 
-/*constructor code*/
+  /*constructor code*/
   /*const firebaseConfig = {
       apiKey: 'AIzaSyCDyzDBmOOvHwxTayCgxGD60d7sPJowMFg',
       authDomain: 'https://my-awesome-project-f248c.firebaseio.com/',
@@ -59,82 +59,86 @@ class HelloWorldApp extends Component {
 
 
 
-    /**  @componentDidMount
-     * //listener for adding a child
-    this.todosRef.on('child_added', (dataSnapShot) => {
-      this.todos.push({ id: dataSnapShot.key, text: dataSnapShot.val()});
+  /**  @componentDidMount
+   * //listener for adding a child
+  this.todosRef.on('child_added', (dataSnapShot) => {
+    this.todos.push({ id: dataSnapShot.key, text: dataSnapShot.val()});
 
-      this.setState({
-        todoSource: this.state.todoSource.cloneWithRows(this.todos)
-      });
+    this.setState({
+      todoSource: this.state.todoSource.cloneWithRows(this.todos)
     });
+  });
 
-    //listener for removing a child
-    this.todosRef.on('child_removed', (dataSnapShot) => {
-      this.todos = this.todos.filter((x) => x.id !== dataSnapShot.key);
+  //listener for removing a child
+  this.todosRef.on('child_removed', (dataSnapShot) => {
+    this.todos = this.todos.filter((x) => x.id !== dataSnapShot.key);
 
-      this.setState({
-        todoSource: this.state.todoSource.cloneWithRows(this.todos)
-      });
+    this.setState({
+      todoSource: this.state.todoSource.cloneWithRows(this.todos)
+    });
+  });
+}
+
+addTodo() {
+  if(this.state.todo !== '') {
+    this.todosRef.push(this.state.todo);
+
+    this.setState({
+      todo: ''
     });
   }
+}
 
-  addTodo() {
-    if(this.state.todo !== '') {
-      this.todosRef.push(this.state.todo);
+removeTodo(rowData) {
+  this.todosRef.child(rowData.id).remove();
+}
 
-      this.setState({
-        todo: ''
-      });
-    }
-  }
+renderRow = (rowData) => {
+  return(
+    <TouchableHighlight underlayColor='#dddddd' onPress={() => this.removeTodo(rowData)}>
+      <View>
+        <View style={styles.row}>
+          <Text style={styles.todoText}> {rowData.text} </Text>
 
-  removeTodo(rowData) {
-    this.todosRef.child(rowData.id).remove();
-  }
-
-  renderRow = (rowData) => {
-    return(
-      <TouchableHighlight underlayColor='#dddddd' onPress={() => this.removeTodo(rowData)}>
-        <View>
-          <View style={styles.row}>
-            <Text style={styles.todoText}> {rowData.text} </Text>
-
-          </View>
-          <View style={styles.separator} />
         </View>
-      </TouchableHighlight>
-    )
-    */
+        <View style={styles.separator} />
+      </View>
+    </TouchableHighlight>
+  )
+  */
 
-    
+
   render() {
     return (
       <Navigator initialRoute={{
-        id: 'new-todo'
+        id: 'signin'
       }} renderScene={this.renderNavigatorScene} />
     );
   }
 
 
   renderNavigatorScene(route, navigator) {
-    switch(route.id) {
-      case 'signin': 
-        return( <LoginView navigator={navigator}/> );
+    switch (route.id) {
+      case 'signin':
+        return (<LoginView navigator={navigator} />);
       case 'signup':
-      return ( <SignupView navigator={navigator}/>);   
+        return (<SignupView navigator={navigator} />);
 
       case 'todo-list':
-      return ( <TodoListView navigator={navigator}/>);
+        return (<TodoListView navigator={navigator} />);
 
-      case 'new-todo':
-      return ( <NewTodo navigator={navigator} title='New Todo'/>);
+      case 'todo-list':
+        return (<NewTodoView navigator={navigator} />);
+
     }
 
 
   }
 }
 
+
+/*case 'new-todo':
+      return ( <NewTodo navigator={navigator} title='New Todo'/>);*/
 /*
 <View style={styles.appContainer}>
         <View style={styles.titleView}>

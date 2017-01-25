@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#545162'
+    //backgroundColor: '#545162'
   },
   logoContainer: {
     flex:1,
