@@ -9,7 +9,8 @@ import { View,
 } from 'react-native';
 
 import * as FirebaseAuth from '../../services/firebase.auth';
-import Toast from '@remobile/react-native-toast';
+import * as FirebaseDb from '../../services/firebase.database';
+import * as Toast from '../../services/toast';
 
 export default class SignupView extends Component {
   constructor(props) {
@@ -45,15 +46,15 @@ export default class SignupView extends Component {
   onSubmit = () => {
     if ( !this.validateEmail(this.state.email) ) {
       // not a valid email
-      Toast.show(null, "Invalid email address");
+      Toast.show("Invalid email address");
       return;
 
-    } else if (this.state.password.length <= 6) {
-      Toast.show(null, "Password must contain atleast 6 characters");
+    } else if (this.state.password.length < 6) {
+      Toast.show("Password must contain atleast 6 characters");
       return;
 
     } else if (this.state.password !== this.state.confirmPassword) {
-      Toast.show(null, "Passwords did not match");
+      Toast.show("Passwords did not match");
       return;
 
     } else {
@@ -61,12 +62,20 @@ export default class SignupView extends Component {
       FirebaseAuth.signup(this.state.email, this.state.password)
         .then(user => {
           console.log(user);
-          Toast.show(null, 'Successfully registered');
+          let payload =  {
+            displayName: ''
+          }
+          payload.displayName = this.state.name;
+          FirebaseAuth.updateUserInfo(payload);
+
+          Toast.show('Successfully registered');
+
+          FirebaseDb.addUser(user.uid, payload.displayName, user.email );
           this.props.navigator.push({
             id: 'signin'
           });
         })
-        .catch(e => Toast.show(null, 'The combination did not match our records, please try again'));
+        .catch(e => Toast.show('The combination did not match our records, please try again'));
     }
   };
 

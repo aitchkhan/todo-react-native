@@ -37,19 +37,20 @@ export default class LoginView extends Component {
       //Toast.show(null, "Invalid email address");
       Toast.show('Invalid email address')
       return;
-    } else if (this.state.password.length <= 6) {
+    } else if (this.state.password.length < 6) {
       Toast.show('Password must contain atleast 6 characters');
-      
     } else {
       // valid email
       FirebaseAuth.signin(this.state.email, this.state.password)
         .then(user => {
           console.log(user);
           Toast.show('Successfully Logged in');
+          
           this.setState({
             email: '',
             password: ''
-          })
+          });
+          
           this.props.navigator.push({
             id: 'todo-list'
           });
