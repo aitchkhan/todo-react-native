@@ -70,7 +70,8 @@ export default class SignupView extends Component {
 
           Toast.show('Successfully registered');
 
-          FirebaseDb.addUser(user.uid, payload.displayName, user.email );
+          FirebaseDb.addUser(user.uid, payload.displayName, user.email);
+          
           this.props.navigator.push({
             id: 'signin'
           });

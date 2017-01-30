@@ -6,11 +6,15 @@ import { View,
   TextInput, 
   TouchableOpacity, 
   Button,
-  ToolbarAndroid 
+  ToolbarAndroid,
+  ScrollView 
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import ScrollableTabView, {DefaultTabBar } from 'react-native-scrollable-tab-view';
+import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+
+import TabBar from '../../components/TabBar';
+
 export default class TodoListView extends Component {
   constructor(props) {
     super(props);
@@ -30,32 +34,45 @@ export default class TodoListView extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <View style={styles.toolbar}></View>
-      <TouchableOpacity onPress={() => this._navigate('new-todo')}>
-      <Icon name='md-add' color='black' size={30} style={styles.icons}/>
-      </TouchableOpacity>
-    
+        <View style={styles.toolbar}></View>
+        <TouchableOpacity onPress={() => this._navigate('new-todo')}>
+          <Icon name='md-add' color='black' size={30} style={styles.icons} />
+        </TouchableOpacity>
+
         <View style={styles.containerToolbar}>
-          <ScrollableTabView style={{ marginTop: 30 }}
-            renderTabBar={() => <DefaultTabBar />}>
-             
-            <Text tabLabel='Assigned'></Text>
-            <Text tabLabel='Sent'></Text>
+          <ScrollableTabView style={{ marginTop: 30 }} initialPage={1}
+            renderTabBar={() => <TabBar />}>
+
+            <ScrollView tabLabel="ios-paper" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>News</Text>
+              </View>
+            </ScrollView>
+            <ScrollView tabLabel="ios-people" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Friends</Text>
+              </View>
+            </ScrollView>
+            <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Messenger</Text>
+              </View>
+            </ScrollView>
+            <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Notifications</Text>
+              </View>
+            </ScrollView>
+            <ScrollView tabLabel="ios-list" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Other nav</Text>
+              </View>
+            </ScrollView>
           </ScrollableTabView>
-         
-        </View>
-        <View style={styles.list}>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
-          <Text>Todo List View</Text>
+
         </View>
 
-        
+
       </View>
     );
   }

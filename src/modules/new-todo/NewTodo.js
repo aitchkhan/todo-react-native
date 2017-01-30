@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Button from 'apsl-react-native-button';
 import * as _ from 'lodash';
 
-import database from '../../services/firebase.database';
+import * as FirebaseDb from '../../services/firebase.database';
 import * as FirebaseAuth from '../../services/firebase.auth';
 
 import Navbar from '../../components/Navbar.android';
@@ -22,11 +22,12 @@ export default class NewTodo extends Component {
     super(props);
 
     this.state = {
-      type: '',
+      type: 'query',
       title: '',
       assignor: '',
-      assignee: '',
-      description: ''
+      assignee: 'user1',
+      description: '',
+      users: []
     };
   }
 
@@ -61,16 +62,32 @@ export default class NewTodo extends Component {
     
     assignment = assignmentClone;
 
-    let assignmentRef = database.ref('assignments/');
+    FirebaseDb.addAssignment(assignment);
 
-    newAssignment = assignmentRef.push();
-    newAssignment.set(assignment);
     console.log(assignment);
-    this.state.title = '';
-    this.state.description = '';
-    this.state.type = '';
-    this.state.assignee = '';
+    this.setState({
+      title: '',
+      description: '',
+      type: 'query',
+      assignee: 'user1'
+    });
   }
+
+
+  componentDidMount() {
+    let tempUsers = [];
+    FirebaseDb.findAllUsers()
+      .then(snap => snap.forEach(childSnap => {
+        tempUsers.push(childSnap.val());
+      }))
+      .then(() => {
+        this.setState({
+          users: tempUsers
+        });
+        console.log(this.state.users);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -91,9 +108,14 @@ export default class NewTodo extends Component {
             mode='dropdown'
             onValueChange={(user) => this.setState({
               assignee: user
-            })}>
-            <Picker.Item label='User 1' value='user1' />
-            <Picker.Item label='User 2' value='user2' />
+            })}>{
+              this.state.users.map((user, index) => {
+                return(
+                  <Picker.Item value={user.email} label={user.displayName} key={index} />
+                );
+              })
+            }
+            
           </Picker>
           <TextInput placeholder='Title' value={this.state.title} onChangeText={title => this.setState({title})}/>
           <TextInput placeholder='Description' value={this.state.description} multiline={true} onChangeText={description => this.setState({description})}></TextInput>
