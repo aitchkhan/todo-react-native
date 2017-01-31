@@ -1,8 +1,6 @@
 import firebaseRef from './firebase';
 const database = firebaseRef.database();
 
-export default database;
-
 let assignmentsRef = database.ref('assignments/');
 let usersRef = database.ref('users/');
 
@@ -16,6 +14,12 @@ export function addUser(uid, displayName, email) {
 export function addAssignment(assignment) {
   let newAssignment = assignmentsRef.push();
   newAssignment.set(assignment);
+}
+
+export function getAssignment() {
+  return assignmentsRef.once('value').then((snapshot) => {
+    return snapshot.val();
+  });
 }
 
 export function findAllUsers() {

@@ -3887,6 +3887,16 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
+react-native-gifted-listview@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-listview/-/react-native-gifted-listview-0.0.15.tgz#c92b5b7b32cea7705b727ab4bc199751379dce07"
+  dependencies:
+    react-native-gifted-spinner "^0.0.4"
+
+react-native-gifted-spinner@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-spinner/-/react-native-gifted-spinner-0.0.4.tgz#32652b5a60423f14719a1c3125613299af0995f2"
+
 react-native-root-siblings@^1.0.7:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-1.1.2.tgz#fc1e7310f4f9f8b080331ff5d173db840d6b9e1f"

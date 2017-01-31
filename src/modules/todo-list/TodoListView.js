@@ -13,7 +13,7 @@ import { View,
 import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
-import TabBar from '../../components/TabBar';
+import CustomListView from '../../components/GiftedListView'
 
 export default class TodoListView extends Component {
   constructor(props) {
@@ -40,32 +40,13 @@ export default class TodoListView extends Component {
         </TouchableOpacity>
 
         <View style={styles.containerToolbar}>
-          <ScrollableTabView style={{ marginTop: 30 }} initialPage={1}
-            renderTabBar={() => <TabBar />}>
-
-            <ScrollView tabLabel="ios-paper" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>News</Text>
-              </View>
-            </ScrollView>
-            <ScrollView tabLabel="ios-people" style={styles.tabView}>
+          <ScrollableTabView style={{ marginTop: 30 }} initialPage={0}
+            renderTabBar={() => <DefaultTabBar />}>
+            <CustomListView tabLabel= "Assigned" style={styles.tabView} />
+            
+            <ScrollView tabLabel="Received" style={styles.tabView}>
               <View style={styles.card}>
                 <Text>Friends</Text>
-              </View>
-            </ScrollView>
-            <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Messenger</Text>
-              </View>
-            </ScrollView>
-            <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Notifications</Text>
-              </View>
-            </ScrollView>
-            <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Other nav</Text>
               </View>
             </ScrollView>
           </ScrollableTabView>

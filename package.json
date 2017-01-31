@@ -7,12 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@remobile/react-native-toast": "^1.0.5",
     "apsl-react-native-button": "^3.0.2",
     "firebase": "^3.6.5",
     "lodash": "^4.17.4",
     "react": "15.4.1",
     "react-native": "0.38.0",
+    "react-native-gifted-listview": "^0.0.15",
     "react-native-root-toast": "^1.0.3",
     "react-native-scrollable-tab-view": "^0.7.1",
     "react-native-vector-icons": "^4.0.0"
