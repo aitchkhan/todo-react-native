@@ -6,6 +6,7 @@ import {
   Text
 } from 'react-native';
 
+import * as _ from 'lodash';
 import GiftedListView from 'react-native-gifted-listview';
 
 import * as FirebaseDb from '../services/firebase.database'; 
@@ -23,12 +24,18 @@ export default class CustomListView extends Component {
    * @param {object} options Inform if first load
    */
   _onFetch(page = 1, callback, options) {
-
-    FirebaseDb.getAssignment().then((payload) => {
-      console.log(payload);
+    var header = 'Header ' + page;
+    var rows = [];
+    FirebaseDb.getAssignments(this.props.person).then((payload) => {
+      _.forOwn(payload, (value, key) => {
+        rows.push(value) 
+      });
+      callback(rows);
     });
-    setTimeout(() => {
-      var rows = ['row ' + ((page - 1) * 3 + 1), 'row ' + ((page - 1) * 3 + 2), 'row ' + ((page - 1) * 3 + 3)];
+    /*setTimeout(() => {
+      var header = 'Header '+page;
+      var rows = {};
+      rows[header] = ['row ' + ((page - 1) * 3 + 1), 'row ' + ((page - 1) * 3 + 2), 'row ' + ((page - 1) * 3 + 3)];
       if (page === 5) {
         callback(rows, {
           allLoaded: true, // the end of the list is reached
@@ -36,10 +43,10 @@ export default class CustomListView extends Component {
       } else {
         callback(rows);
       }
-    }, 1000); // simulating network fetching
+    }, 1000); // simulating network fetching*/
   }
 
-  /**
+ /**
  * When a row is touched
  * @param {object} rowData Row data
  */
@@ -58,17 +65,39 @@ export default class CustomListView extends Component {
         underlayColor='#c8c7cc'
         onPress={() => this._onPress}
         >
-        <Text>{rowData}</Text>
+        <Text>{rowData.description}</Text>
       </TouchableHighlight>
     );
   }
 
+   /**
+   * Render section header
+   * @param sectionData, sectionID
+   */
+  _renderSectionHeaderView(sectionData, sectionID) {
+    return (
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>
+          {sectionID}
+        </Text>
+      </View>
+    );
+  }
+
+   /**
+   * Render a separator between rows
+   */
+  _renderSeparatorView() {
+    return (
+      <View style={styles.separator} />
+    );
+  }
 
   render() {
     return (
       <GiftedListView
         rowView={this._renderRowView}
-        onFetch={this._onFetch}
+        onFetch={this._onFetch.bind(this)}
         firstLoader={true} // display a loader for the first fetching
         pagination={true} // enable infinite scrolling using touch to load more
         refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
@@ -79,6 +108,9 @@ export default class CustomListView extends Component {
           },
         }}
 
+        enableEmptySections={true}
+        renderSeparator={this._renderSeparatorView}
+        //sectionHeaderView={this._renderSectionHeaderView}
         refreshableTintColor="blue"
         />
     )
@@ -97,5 +129,16 @@ const styles = StyleSheet.create({
   row: {
     padding: 10,
     height: 44,
+  },
+  header: {
+    backgroundColor: '#50a4ff',
+    padding: 10,
+  },
+  headerTitle: {
+    color: '#fff',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#CCC'
   },
 });

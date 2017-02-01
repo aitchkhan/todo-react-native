@@ -32,7 +32,7 @@ export default class LoginView extends Component {
   };
 
   onSubmit = () => {
-    if ( !this.validateEmail(this.state.email) ) {
+    if (!this.validateEmail(this.state.email)) {
       // not a valid email
       //Toast.show(null, "Invalid email address");
       Toast.show('Invalid email address')
@@ -45,19 +45,21 @@ export default class LoginView extends Component {
         .then(user => {
           console.log(user);
           Toast.show('Successfully Logged in');
-          
+
           this.setState({
             email: '',
             password: ''
           });
-          
+
           this.props.navigator.push({
             id: 'todo-list'
           });
         })
-        .catch(e => Toast.show('The combination did not match our records, please try again'));
+        .catch(e => {
+          Toast.show('The combination did not match our records, please try again')
+        } );
     }
-  };
+  }
 
   /*
   @onPressSignup
@@ -66,7 +68,7 @@ export default class LoginView extends Component {
     this.props.navigator.push({
       id: 'signup'
     })
-  };
+  }
 
   //render method of the component
   render() {

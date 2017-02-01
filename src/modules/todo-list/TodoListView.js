@@ -42,13 +42,9 @@ export default class TodoListView extends Component {
         <View style={styles.containerToolbar}>
           <ScrollableTabView style={{ marginTop: 30 }} initialPage={0}
             renderTabBar={() => <DefaultTabBar />}>
-            <CustomListView tabLabel= "Assigned" style={styles.tabView} />
+            <CustomListView tabLabel= "Assigned" style={styles.tabView} person={'assignor'}/>
+            <CustomListView tabLabel= "Assigned to you" style={styles.tabView} person={'assignee'}/>
             
-            <ScrollView tabLabel="Received" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Friends</Text>
-              </View>
-            </ScrollView>
           </ScrollableTabView>
 
         </View>

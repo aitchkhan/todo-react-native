@@ -5,8 +5,17 @@ import * as Toast from '../services/toast';
 
 const auth = firebaseRef.auth();
 
+export let currentUser;
+
+auth.onAuthStateChanged((user) => {
+  if(user) {
+    currentUser = user;
+  }
+});
+
+
 /*
-login meth
+login method
 */
 export function signup(email, password) {
   const promise = auth.createUserWithEmailAndPassword(email, password);
@@ -28,6 +37,7 @@ export function getCurrentUser() {
     return user;
   } else return null;
 }
+
 
 export function updateUserInfo(userInfo) {
   let currentUser = auth.currentUser;

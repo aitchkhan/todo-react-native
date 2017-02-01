@@ -30,7 +30,7 @@ export default class SignupView extends Component {
   onPressLogin = () => {
     this.props.navigator.push({
       id: 'signin'
-    })
+    });
   };
 
   /*

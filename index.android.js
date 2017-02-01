@@ -111,7 +111,7 @@ class HelloWorldApp extends Component {
   render() {
     return (
       <Navigator initialRoute={{
-        id: 'todo-list'
+        id: 'signin'
       }} renderScene={this.renderNavigatorScene} />
     );
   }
