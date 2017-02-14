@@ -12,6 +12,7 @@
     "lodash": "^4.17.4",
     "react": "15.4.1",
     "react-native": "0.38.0",
+    "react-native-fileupload": "^1.2.0",
     "react-native-gifted-listview": "^0.0.15",
     "react-native-root-toast": "^1.0.3",
     "react-native-scrollable-tab-view": "^0.7.1",

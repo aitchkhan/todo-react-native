@@ -21,6 +21,7 @@ import LoginView from './src/modules/login/LoginView';
 import SignupView from './src/modules/signup/SignUpView';
 import TodoListView from './src/modules/todo-list/TodoListView';
 import NewTodo from './src/modules/new-todo/NewTodo';
+import FileUploadView from './src/modules/file-upload/FileUploadView';
 
 
 
@@ -111,7 +112,7 @@ class HelloWorldApp extends Component {
   render() {
     return (
       <Navigator initialRoute={{
-        id: 'signin'
+        id: 'file-upload'
       }} renderScene={this.renderNavigatorScene} />
     );
   }
@@ -129,6 +130,9 @@ class HelloWorldApp extends Component {
 
       case 'new-todo':
       return ( <NewTodo navigator={navigator} title='New Todo'/>);
+
+      case 'file-upload':
+      return ( <FileUploadView navigator={navigator} title='File Upload'/>);
     }
 
 

@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@remobile/react-native-toast@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@remobile/react-native-toast/-/react-native-toast-1.0.5.tgz#a74b1838a11b1951a354d62332fc21805b72cdca"
-
 JSONStream@^1.0.3:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.0.tgz#680ab9ac6572a8a1a207e0b38721db1c77b215e5"
@@ -3886,6 +3882,10 @@ react-clone-referenced-element@^1.0.1:
 react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
+
+react-native-fileupload@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-fileupload/-/react-native-fileupload-1.2.0.tgz#af2bb2289ba2a4fe899d343f0d102a978350e34b"
 
 react-native-gifted-listview@^0.0.15:
   version "0.0.15"

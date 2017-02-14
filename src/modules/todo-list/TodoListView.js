@@ -13,6 +13,8 @@ import { View,
 import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
+
+
 import CustomListView from '../../components/GiftedListView'
 
 export default class TodoListView extends Component {
@@ -31,6 +33,7 @@ export default class TodoListView extends Component {
       id: 'new-todo'
     })
   }
+
   render() {
     return (
       <View style={styles.container}>
